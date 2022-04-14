@@ -13,6 +13,9 @@ app.set("view engine", "ejs");
 //path.join(__dirname, 2nd para)  2nd parameter value to join to construct a path to the view folder
 app.set("views", path.join(__dirname, "views"));
 
+//tell app where to fetch static contents
+app.use(express.static("public"));
+
 //register routes
 app.use(authRoutes);
 
