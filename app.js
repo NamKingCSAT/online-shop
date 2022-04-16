@@ -1,10 +1,11 @@
 const path = require("path");
 
 const express = require("express");
+const csrf = require('csurf');
 
 //establish database connection before the web server
 const db = require("./data/database");
-
+const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
 const authRoutes = require("./routes/auth.routes");
 
 const app = express();
@@ -23,6 +24,11 @@ app.use(express.static("public"));
 //it is common to see extended set to false to support a regular form submission.
 //allow the extraction of data from url request
 app.use(express.urlencoded({ extended: false }));
+
+//to protect against csrf attack, the position is not important but have to be before the request hit your route
+app.use(csrf())
+
+app.use(addCsrfTokenMiddleware);
 
 //register routes
 app.use(authRoutes);
