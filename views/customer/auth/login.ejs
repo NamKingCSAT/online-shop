@@ -8,6 +8,7 @@
             <main>
                 <h1>Login</h1>
                 <form action="signup" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
                     <!--p tags are used here to mark and group form inputs, it is acceptable to do this-->
                     <p>
                         <label for="email">E-mail</label>
