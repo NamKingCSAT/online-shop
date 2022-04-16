@@ -18,6 +18,11 @@ app.set("views", path.join(__dirname, "views"));
 
 //tell app where to fetch static contents
 app.use(express.static("public"));
+//have to call urlencoded because this function yields the actual middleware
+//we can pass an object to this function with configuration to it
+//it is common to see extended set to false to support a regular form submission.
+//allow the extraction of data from url request
+app.use(express.urlencoded({ extended: false }));
 
 //register routes
 app.use(authRoutes);
@@ -30,4 +35,3 @@ db.connectToDatabase()
         console.log("Failed to connect to the database!")
         console.log(error);
     });
-app.listen(3000);
