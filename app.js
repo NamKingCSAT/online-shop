@@ -2,7 +2,9 @@ const path = require("path");
 
 const express = require("express");
 const csrf = require('csurf');
-
+const expressSession = require("express-session");
+//where to store session
+const createSessionConfig = require("./config/session");
 //establish database connection before the web server
 const db = require("./data/database");
 const addCsrfTokenMiddleware = require('./middlewares/csrf-token');
@@ -27,6 +29,9 @@ app.use(express.static("public"));
 //allow the extraction of data from url request
 app.use(express.urlencoded({ extended: false }));
 
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 //to protect against csrf attack, the position is not important but have to be before the request hit your route
 app.use(csrf())
 
