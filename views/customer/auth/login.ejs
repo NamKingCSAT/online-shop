@@ -7,6 +7,12 @@
         <%- include('../../shared/includes/header')%>
             <main>
                 <h1>Login</h1>
+                    <% if (inputData.errorMessage) { %>
+                    <section class="alert">
+                        <h2>Invalid Credentials</h2>
+                        <p><%= inputData.errorMessage%></p>
+                    </section>
+                    <% }%>
                 <form action="/login" method="POST">
                     <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
                     <!--p tags are used here to mark and group form inputs, it is acceptable to do this-->
@@ -14,14 +20,14 @@
                         <label for="email">E-mail</label>
                         <!--type has to be email, id doesn't have to-->
                         <!--to extract the email from the incoming request
-                on the server, we need the attribute name,
-                this is the key for server side to extract-->
-                        <input type="email" id="email" name="email" required>
+                        on the server, we need the attribute name,
+                        this is the key for server side to extract-->
+                        <input type="email" id="email" name="email" value="<%= locals.email %>" required>
                     </p>
 
                     <p>
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" minlength="6" required>
+                        <input type="password" id="password" name="password" minlength="6" value="<%= locals.password %>" required>
                     </p>
                     <button class="btn">Login</button>
                     <p id="switch-form"><a href="/login">Create a new user</a></p>
