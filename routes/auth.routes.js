@@ -15,5 +15,7 @@ router.get("/login", authController.getLogin);
 
 router.post("/login", authController.login);
 
+router.post("/logout", authController.logout);
+
 //module export tell nodejs which object, functions are defined in this file should be exposed to other files
 module.exports = router;
