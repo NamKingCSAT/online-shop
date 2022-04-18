@@ -19,11 +19,12 @@ async function signup(req, res) {
     req.body.fullname,
     req.body.street,
     req.body.postal,
-    req.body.city);
+    req.body.city
+  );
 
   await user.signup();
 
-  res.redirect('/login');
+  res.redirect("/login");
 }
 
 function getLogin(req, res) {
@@ -35,26 +36,33 @@ async function login(req, res) {
   const existingUser = await user.getUserWithSameEmail();
 
   if (!existingUser) {
-    res.redirect('/login');
+    res.redirect("/login");
     return;
   }
 
-  const passwordIsCorrect = await user.hasMatchingPassword(existingUser.password);
+  const passwordIsCorrect = await user.hasMatchingPassword(
+    existingUser.password
+  );
 
   if (!passwordIsCorrect) {
-    res.redirect('/login');
+    res.redirect("/login");
     return;
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect('/');
-  })
+    res.redirect("/");
+  });
+}
 
+function logout(req, res) {
+  authUtil.destroyUserAuthSession(req);
+  res.redirect("/login");
 }
 
 module.exports = {
   getSignup: getSignup,
   getLogin: getLogin,
   signup: signup,
-  login: login
+  login: login,
+  logout: logout,
 };
