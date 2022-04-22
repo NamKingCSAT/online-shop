@@ -2,12 +2,19 @@
 const express = require("express");
 
 const adminController = require("../controllers/admin.controller");
+const imageUploadMiddleware = require("../middlewares/image-upload");
 
 //create router object.
 const router = express.Router();
 
-router.get("/admin/products", adminController.getProducts);
+router.get("/products", adminController.getProducts);
 
-router.get("/admin/products/new", adminController.getNewProduct);
+router.get("/products/new", adminController.getNewProduct);
+
+router.post(
+  "/products",
+  imageUploadMiddleware,
+  adminController.createNewProduct
+);
 
 module.exports = router;
