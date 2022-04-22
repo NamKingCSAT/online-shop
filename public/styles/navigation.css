@@ -73,9 +73,14 @@ main {
   height: calc(100vh - 5rem);
   width: 100%;
   background-color: var(--color-gray-700);
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
+}
+
+/*targetting the element with this id and class present on it*/
+#mobile-menu.open {
+  display: flex;
 }
 
 #mobile-menu nav {
