@@ -1,4 +1,5 @@
 const { GridFSBucket } = require("mongodb");
+const { getProducts } = require("../controllers/admin.controller");
 const db = require("../data/database");
 
 class Product {
@@ -10,6 +11,18 @@ class Product {
     this.image = productData.image; //the name of the image file
     this.imagePath = `product-data/images/${productData.image}`;
     this.imageUrl = `/products/assets/images/${productData.image}`;
+    if (productData._id) {
+      this.id = productData._id.toString;
+    }
+  }
+
+  //static methods can be called without the need of initiating the object
+  static async findAll() {
+    const products = db.getDb().collection("products").find().toArray();
+
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
   }
 
   async save() {
