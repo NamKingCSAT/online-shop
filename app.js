@@ -27,6 +27,8 @@ app.set("views", path.join(__dirname, "views"));
 
 //tell app where to fetch static contents
 app.use(express.static("public"));
+//only requests end with /products/assets will be served with product-data
+app.use("/products/assets", express.static("product-data"));
 //have to call urlencoded because this function yields the actual middleware
 //we can pass an object to this function with configuration to it
 //it is common to see extended set to false to support a regular form submission.
