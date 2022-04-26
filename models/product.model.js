@@ -1,5 +1,4 @@
-const { GridFSBucket } = require("mongodb");
-const { getProducts } = require("../controllers/admin.controller");
+const mongodb = require("mongodb");
 const db = require("../data/database");
 
 class Product {
@@ -14,6 +13,24 @@ class Product {
     if (productData._id) {
       this.id = productData._id.toString;
     }
+  }
+
+  static async findById(productId) {
+    let proId;
+    try {
+      proId = new mongodb.ObjectId(productId);
+    } catch (error) {
+      error.code = 404;
+      throw error;
+    }
+    const product = db.getDb().collection("products").findOne({ _id: proId });
+
+    if (!product) {
+      const error = new Error("Could not find product with provided id.");
+      error.code = 404;
+      throw error;
+    }
+    return product;
   }
 
   //static methods can be called without the need of initiating the object
